@@ -7,7 +7,7 @@ const login = [
   async (req, res, next) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
-      res.status(400).send(errors.array());
+      res.status(400).json(errors.array());
     }
     const cleanData = matchedData(req);
     req.body = {
@@ -36,7 +36,7 @@ const register = [
   async (req, res, next) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
-      res.status(400).send(errors.array());
+      res.status(400).json(errors.array());
     }
     res.locals.validatedUser = matchedData(req);
     next();
