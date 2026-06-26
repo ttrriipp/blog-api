@@ -38,11 +38,7 @@ const register = [
     if (!errors.isEmpty()) {
       res.status(400).send(errors.array());
     }
-    const cleanData = matchedData(req);
-    req.body = {
-      ...req.body,
-      ...cleanData,
-    };
+    res.locals.validatedUser = matchedData(req);
     next();
   },
 ];
