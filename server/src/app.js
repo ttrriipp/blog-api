@@ -32,6 +32,7 @@ app.use((req, res, next) => {
 });
 
 app.use("/api", routes.auth);
+app.use("/api/posts", routes.post);
 
 app.use((err, req, res, next) => {
   console.error(err.stack);
