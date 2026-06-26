@@ -1,13 +1,8 @@
 import { Router } from "express";
 const router = Router();
-import passport from "passport";
+import controller from "../controllers/auth.js";
 
-router.post(
-  "/login",
-  passport.authenticate("local", {
-    failureMessage: true,
-  }),
-  (req, res) => res.send("login successfully"),
-);
+router.post("/login", controller.login);
+router.post("/register", controller.register);
 
 export default router;
