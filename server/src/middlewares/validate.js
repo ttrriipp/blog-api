@@ -43,7 +43,21 @@ const register = [
   },
 ];
 
+const post = [
+  body("title").trim().notEmpty().withMessage("name is required"),
+  body("content").trim().escape(),
+  async (req, res, next) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      res.status(400).json(errors.array());
+    }
+    res.locals.validatedPost = matchedData(req);
+    next();
+  },
+];
+
 export default {
   login,
   register,
+  post,
 };
