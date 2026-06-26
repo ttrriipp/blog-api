@@ -1,6 +1,5 @@
-import { Router } from "express";
-const index = Router();
+import auth from "./auth.js";
 
-index.get("/", (req, res) => res.json({ hello: "world" }));
-
-export default { index };
+export default {
+  auth,
+};
