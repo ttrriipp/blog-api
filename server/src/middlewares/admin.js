@@ -6,9 +6,9 @@ export const isAdmin = async (req, res, next) => {
       where: { id: req.user.id },
     });
     if (user.role !== "admin") {
-      return res.sendStatus(403);
+      res.status(403);
+      throw new Error("Forbidden");
     }
-    next();
   } catch (error) {
     next(error);
   }
