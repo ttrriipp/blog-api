@@ -1,7 +1,16 @@
+import "dotenv/config";
 import bcrypt from "bcryptjs";
 import { prisma } from "../lib/prisma.js";
+import jwt from "jsonwebtoken";
 
-const login = (req, res) => res.send("login successfully");
+const login = (req, res) => {
+  jwt.sign(req.user, process.env.SECRET, { expiresIn: "1h" }, function (err) {
+    if (err) {
+      throw new Error();
+    }
+    res.send("successfully login");
+  });
+};
 
 const register = async (req, res, next) => {
   try {
