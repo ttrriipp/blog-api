@@ -36,8 +36,25 @@ const show = async (req, res, next) => {
   }
 };
 
+const update = async (req, res, next) => {
+  try {
+    const validatedPost = res.locals.validatedPost;
+    await prisma.post.update({
+      where: { id: parseInt(req.params.postId) },
+      data: {
+        title: validatedPost.title,
+        content: validatedPost.content,
+      },
+    });
+    res.send("updated successfully");
+  } catch (error) {
+    next(error);
+  }
+};
+
 export default {
   index,
   create,
   show,
+  update,
 };

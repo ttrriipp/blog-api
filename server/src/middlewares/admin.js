@@ -5,10 +5,11 @@ export const isAdmin = async (req, res, next) => {
     const user = await prisma.user.findUnique({
       where: { id: req.user.id },
     });
-    if (user.role !== "admin") {
+    if (user.role !== "ADMIN") {
       res.status(403);
       throw new Error("Forbidden");
     }
+    next();
   } catch (error) {
     next(error);
   }

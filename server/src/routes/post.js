@@ -15,6 +15,13 @@ router.post(
   validate.post,
   controller.create,
 );
+router.post(
+  "/:postId",
+  isAuthenticated,
+  isAdmin,
+  validate.post,
+  controller.update,
+);
 // edit
 // delete
 
