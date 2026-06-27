@@ -7,6 +7,15 @@ import { isAuthenticated } from "../middlewares/auth.js";
 const router = Router();
 
 router.get("/", isAuthenticated, controller.index);
-router.post("/create", isAdmin, validate.post, controller.create);
+router.get("/:postId", isAuthenticated, controller.show);
+router.post(
+  "/create",
+  isAuthenticated,
+  isAdmin,
+  validate.post,
+  controller.create,
+);
+// edit
+// delete
 
 export default router;

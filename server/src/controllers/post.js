@@ -25,7 +25,19 @@ const create = async (req, res, next) => {
   }
 };
 
+const show = async (req, res, next) => {
+  try {
+    const post = await prisma.post.findUnique({
+      where: { id: parseInt(req.params.postId) },
+    });
+    res.json(post);
+  } catch (error) {
+    next(error);
+  }
+};
+
 export default {
   index,
   create,
+  show,
 };
