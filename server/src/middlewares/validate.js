@@ -56,8 +56,21 @@ const post = [
   },
 ];
 
+const comment = [
+  body("content").trim().notEmpty().withMessage("content is required"),
+  async (req, res, next) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      res.status(400).json(errors.array());
+    }
+    res.locals.validatedComment = matchedData(req);
+    next();
+  },
+];
+
 export default {
   login,
   register,
   post,
+  comment,
 };

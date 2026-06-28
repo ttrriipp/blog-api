@@ -17,6 +17,26 @@ const index = async (req, res, next) => {
   }
 };
 
+const create = async (req, res, next) => {
+  try {
+    const postId = parseInt(req.params.postId);
+    const commenterId = req.user.id;
+    const validatedComment = res.locals.validatedComment;
+    const createdPost = await prisma.comment.create({
+      data: {
+        postId,
+        commenterId,
+        ...validatedComment,
+      },
+    });
+    console.log(createdPost);
+    res.send("created successfully");
+  } catch (error) {
+    next(error);
+  }
+};
+
 export default {
   index,
+  create,
 };
