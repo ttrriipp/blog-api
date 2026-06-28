@@ -6,8 +6,8 @@ import { isAuthenticated } from "../middlewares/auth.js";
 
 const router = Router();
 
-router.get("/", isAuthenticated, controller.index);
-router.get("/:postId", isAuthenticated, controller.show);
+router.get("/", controller.index);
+router.get("/:postId", controller.show);
 router.post(
   "/create",
   isAuthenticated,
