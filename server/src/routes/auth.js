@@ -14,5 +14,6 @@ router.post(
 );
 
 router.post("/register", validate.register, controller.register);
+router.post("/logout", controller.logout);
 
 export default router;

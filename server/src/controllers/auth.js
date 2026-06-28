@@ -4,12 +4,17 @@ import { prisma } from "../lib/prisma.js";
 import jwt from "jsonwebtoken";
 
 const login = (req, res) => {
-  jwt.sign(req.user, process.env.SECRET, { expiresIn: "1h" }, function (err) {
-    if (err) {
-      throw new Error();
-    }
-    res.send("successfully login");
-  });
+  jwt.sign(
+    req.user,
+    process.env.SECRET,
+    { expiresIn: "1h" },
+    function (err, token) {
+      if (err) {
+        throw new Error();
+      }
+      res.send("successfully login");
+    },
+  );
 };
 
 const register = async (req, res, next) => {
@@ -34,7 +39,17 @@ const register = async (req, res, next) => {
   }
 };
 
+const logout = (req, res, next) => {
+  if (!req.user) return res.send("you are already logged out");
+  req.logout(function (err) {
+    if (err) return next(err);
+
+    res.send("succesfully logged out");
+  });
+};
+
 export default {
   login,
   register,
+  logout,
 };
