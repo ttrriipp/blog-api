@@ -52,9 +52,18 @@ const update = async (req, res, next) => {
   }
 };
 
+const deletePost = async (req, res, next) => {
+  const deletedPost = await prisma.post.delete({
+    where: { id: parseInt(req.params.postId) },
+  });
+  console.log(deletedPost);
+  res.send("successfully deleted");
+};
+
 export default {
   index,
   create,
   show,
   update,
+  deletePost,
 };

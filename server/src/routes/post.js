@@ -22,7 +22,6 @@ router.post(
   validate.post,
   controller.update,
 );
-// edit
-// delete
+router.delete("/:postId", isAuthenticated, isAdmin, controller.deletePost);
 
 export default router;
