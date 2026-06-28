@@ -59,7 +59,7 @@ const deletePost = async (req, res, next) => {
       where: { id: parseInt(req.params.postId) },
     });
     if (!post) res.sendStatus(404);
-    await prisma.post.delete({
+    const deletedPost = await prisma.post.delete({
       where: { id: parseInt(req.params.postId) },
     });
     console.log(deletedPost);

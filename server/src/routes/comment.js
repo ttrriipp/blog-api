@@ -22,5 +22,11 @@ router.patch(
   validate.comment,
   controller.update,
 );
+router.delete(
+  "/:commentId",
+  isAuthenticated,
+  postExists,
+  controller.deleteComment,
+);
 
 export default router;

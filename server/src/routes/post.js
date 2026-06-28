@@ -15,7 +15,7 @@ router.post(
   validate.post,
   controller.create,
 );
-router.post(
+router.patch(
   "/:postId",
   isAuthenticated,
   isAdmin,
