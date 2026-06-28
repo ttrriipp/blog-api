@@ -12,6 +12,7 @@ const login = (req, res) => {
       if (err) {
         throw new Error();
       }
+      console.log(token);
       res.send("successfully login");
     },
   );
