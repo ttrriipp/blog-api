@@ -57,6 +57,18 @@ const show = async (req, res, next) => {
   try {
     const post = await prisma.post.findUnique({
       where: { id: parseInt(req.params.postId) },
+      omit: { published: true, authorId: true },
+      include: {
+        author: {
+          select: {
+            name: true,
+          },
+        },
+        comments: {
+          omit: { commenterId: true, postId: true },
+          include: { commenter: { select: { name: true } } },
+        },
+      },
     });
     if (!post) return res.sendStatus(404);
     res.json(post);

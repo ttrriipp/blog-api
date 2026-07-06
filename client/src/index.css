@@ -4,6 +4,7 @@
 @import "@fontsource-variable/lora";
 @import "@fontsource-variable/public-sans";
 
+
 @custom-variant dark (&:is(.dark *));
 
 :root {

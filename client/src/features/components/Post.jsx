@@ -7,13 +7,10 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card"
+import { NavLink } from "react-router";
 
 function Post({ data }) {
   const readableDate = new Date(data.createdAt).toLocaleString();
-  function handleClick() {
-
-  }
-
   return (
     <Card className="relative mx-auto w-full max-w-sm pt-0">
       <div className="absolute inset-0 z-30 aspect-video bg-black/35" />
@@ -30,7 +27,9 @@ function Post({ data }) {
         <p className="truncate">{data.content}</p>
       </CardContent>
       <CardFooter>
-        <Button className="w-full">Read More</Button>
+        <NavLink className="w-full" to={`/posts/${data.id}`}>
+          <Button className="w-full">Read More</Button>
+        </NavLink>
       </CardFooter>
     </Card>
 

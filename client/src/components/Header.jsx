@@ -2,7 +2,7 @@ function Header() {
   return (
     <div className="flex justify-between p-4 bg-sidebar">
       <div>
-        <h1 className="text-4xl font-extrabold text-sidebar-foreground">BS Blog</h1>
+        <a className="text-4xl font-extrabold text-sidebar-foreground">BS Blog</a>
       </div>
       <div>
         auth
