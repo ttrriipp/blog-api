@@ -1,8 +1,19 @@
 import { prisma } from "../lib/prisma.js";
 
-const index = async (req, res, next) => {
+const adminIndex = async (req, res, next) => {
   try {
     const posts = await prisma.post.findMany();
+    res.json(posts);
+  } catch (error) {
+    next(error);
+  }
+};
+
+const publicIndex = async (req, res, next) => {
+  try {
+    const posts = await prisma.post.findMany({
+      where: { published: true },
+    });
     res.json(posts);
   } catch (error) {
     next(error);
@@ -70,7 +81,8 @@ const deletePost = async (req, res, next) => {
 };
 
 export default {
-  index,
+  adminIndex,
+  publicIndex,
   create,
   show,
   update,

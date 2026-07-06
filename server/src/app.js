@@ -39,6 +39,7 @@ app.use((req, res, next) => {
 });
 
 app.use("/api", routes.auth);
+app.use("/api/admin", routes.admin);
 app.use("/api/posts", routes.post);
 app.use("/api/posts/:postId/comments", routes.comment);
 
