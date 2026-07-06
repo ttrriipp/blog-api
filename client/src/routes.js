@@ -5,8 +5,13 @@ import { loader as HomeLoader } from "./features/homeLoader";
 export default [
   {
     path: "/",
-    loader: HomeLoader,
     Component: App,
-    children: [{ index: true, Component: Home }],
+    children: [
+      {
+        index: true,
+        loader: HomeLoader,
+        Component: Home,
+      },
+    ],
   },
 ];
