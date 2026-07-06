@@ -4,11 +4,18 @@ import expressSession from "express-session";
 import { PrismaSessionStore } from "@quixo3/prisma-session-store";
 import { prisma } from "./lib/prisma.js";
 import passport from "./config/passport.js";
+import cors from "cors";
+import "dotenv/config";
 
 const app = express();
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use(
+  cors({
+    origin: process.env.FRONTEND_URL,
+  }),
+);
 
 app.use(
   expressSession({
