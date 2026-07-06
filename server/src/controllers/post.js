@@ -2,7 +2,16 @@ import { prisma } from "../lib/prisma.js";
 
 const adminIndex = async (req, res, next) => {
   try {
-    const posts = await prisma.post.findMany();
+    const posts = await prisma.post.findMany({
+      omit: { published: true, authorId: true },
+      include: {
+        author: {
+          select: {
+            name: true,
+          },
+        },
+      },
+    });
     res.json(posts);
   } catch (error) {
     next(error);
@@ -13,6 +22,14 @@ const publicIndex = async (req, res, next) => {
   try {
     const posts = await prisma.post.findMany({
       where: { published: true },
+      omit: { published: true, authorId: true },
+      include: {
+        author: {
+          select: {
+            name: true,
+          },
+        },
+      },
     });
     res.json(posts);
   } catch (error) {
