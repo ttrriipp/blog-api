@@ -1,7 +1,15 @@
+import { Outlet } from "react-router"
+import Header from "./components/Header"
+
 function App() {
   return (
     <>
-      <p className="text-4xl">hello</p>
+      <header>
+        <Header />
+      </header>
+      <main>
+        <Outlet />
+      </main>
     </>
   )
 }
