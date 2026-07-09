@@ -1,13 +1,14 @@
 import apiClient from "@/lib/api";
-import { data } from "react-router";
+import { data, redirect } from "react-router";
 
 export async function action({ request }) {
   try {
     const formData = await request.formData();
     const user = Object.fromEntries(formData);
-    const response = await apiClient.post("/register", user);
-    console.log(response.data);
-    return;
+    const { data } = await apiClient.post("/auth/register", user);
+    localStorage.setItem("access_token", data.token);
+    console.log("you are now authenticated!");
+    return redirect("/");
   } catch (error) {
     console.error("Fetch Error:", error);
     throw data(error.response.data, error.response);

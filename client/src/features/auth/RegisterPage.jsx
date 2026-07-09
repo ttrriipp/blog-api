@@ -19,11 +19,9 @@ function RegisterPage() {
   const [password, setPassword] = useState("");
 
   const handleSubmit = (e) => {
-    // e.preventDefault();
-    // setName("")
-    // setUsername("")
-    // setPassword("")
-    // return
+    setName("")
+    setUsername("")
+    setPassword("")
   }
 
   return (

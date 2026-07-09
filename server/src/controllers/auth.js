@@ -10,7 +10,7 @@ const login = (req, res) => {
     { expiresIn: "1h" },
     function (err, token) {
       if (err) {
-        throw new Error();
+        throw new Error(err);
       }
       console.log(token);
       res.send("successfully login");
@@ -33,8 +33,18 @@ const register = async (req, res, next) => {
       if (error) {
         throw new Error(error);
       }
-      return res.json("registered successfully");
     });
+    jwt.sign(
+      req.user,
+      process.env.SECRET,
+      { expiresIn: "1h" },
+      function (err, token) {
+        if (err) {
+          throw new Error(err);
+        }
+        return res.json({ token });
+      },
+    );
   } catch (error) {
     next(error);
   }

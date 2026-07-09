@@ -6,6 +6,9 @@ import { loader as PostLoader } from "./features/post/postLoader";
 import { action as RegisterAction } from "./features/auth/registerAction";
 import RegisterPage from "./features/auth/RegisterPage";
 import RootErrorBoundary from "./RootErrorBoundary";
+import CreateCommentPage from "./features/comment/CreateComment";
+import { authMiddleware } from "./middleware/auth";
+import { UserContext } from "./context";
 
 export default [
   {
@@ -21,6 +24,15 @@ export default [
         path: "/posts/:postId",
         loader: PostLoader,
         Component: PostPage,
+      },
+      {
+        path: "/comments/create",
+        loader: async ({ context }) => {
+          const user = context.get(UserContext);
+          return { user };
+        },
+        middleware: [authMiddleware],
+        Component: CreateCommentPage,
       },
     ],
   },
