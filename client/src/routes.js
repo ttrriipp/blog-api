@@ -4,9 +4,10 @@ import PostPage from "./features/post/PostPage";
 import { loader as HomeLoader } from "./features/home/homeLoader";
 import { loader as PostLoader } from "./features/post/postLoader";
 import { action as RegisterAction } from "./features/auth/registerAction";
+import { action as CreateCommentAction } from "./features/comment/createCommentAction";
 import RegisterPage from "./features/auth/RegisterPage";
 import RootErrorBoundary from "./RootErrorBoundary";
-import CreateCommentPage from "./features/comment/CreateComment";
+import CreateCommentPage from "./features/comment/CreateCommentPage";
 import { authMiddleware } from "./middleware/auth";
 import { UserContext } from "./context";
 
@@ -21,18 +22,20 @@ export default [
         Component: HomePage,
       },
       {
-        path: "/posts/:postId",
+        path: "posts/:postId",
         loader: PostLoader,
         Component: PostPage,
       },
       {
-        path: "/comments/create",
+        path: "posts/:postId/comments/create",
         loader: async ({ context }) => {
           const user = context.get(UserContext);
           return { user };
         },
         middleware: [authMiddleware],
+        action: CreateCommentAction,
         Component: CreateCommentPage,
+        ErrorBoundary: RootErrorBoundary,
       },
     ],
   },

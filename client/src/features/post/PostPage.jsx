@@ -1,6 +1,7 @@
-import { Card, CardContent, CardHeader } from "@/components/ui/card";
+import { Card, CardAction, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
-import { useLoaderData } from "react-router";
+import { Button } from "@/components/ui/button";
+import { useLoaderData, Outlet, Link } from "react-router";
 import Comment from "./components/Comment";
 
 function PostPage() {
@@ -22,9 +23,17 @@ function PostPage() {
         </article>
       </section>
       <section>
-        {/* comments */}
         <Card className="flex flex-col gap-4 mx-auto max-w-2xl">
-          <CardHeader>Comments</CardHeader>
+          <CardHeader>
+            <CardTitle>
+              Comments
+            </CardTitle>
+            <CardAction>
+              <Link to="comments/create">
+                <Button>Create Comment</Button>
+              </Link>
+            </CardAction>
+          </CardHeader>
           <CardContent className="flex flex-col gap-4">
             {post.comments.map((comment) => (
               <Comment data={comment} key={comment.id} />
@@ -32,6 +41,7 @@ function PostPage() {
           </CardContent>
         </Card>
       </section>
+      <Outlet />
     </div>
   )
 }

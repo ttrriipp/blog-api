@@ -26,7 +26,7 @@ const create = async (req, res, next) => {
       },
     });
     console.log(createdComment);
-    res.send("created successfully");
+    res.json("created successfully");
   } catch (error) {
     next(error);
   }
