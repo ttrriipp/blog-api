@@ -43,11 +43,27 @@ app.use("/api/admin", routes.admin);
 app.use("/api/posts", routes.post);
 app.use("/api/posts/:postId/comments", routes.comment);
 
+// error handler
 app.use((err, req, res, next) => {
+  const errorDetails = {
+    message: err.message,
+    route: req.originalUrl,
+    method: req.method,
+    time: new Date(),
+  };
+  console.log(
+    "Error details from middleware:",
+    JSON.stringify(errorDetails, null, 2),
+  );
   console.error(err.stack);
+  let statusCode = err.statusCode || 500;
   let message = err.message || "Internal Server Error";
 
-  res.json(message);
+  if (res.headersSent) {
+    return next(err); // Pass to default Express error handler if response already started
+  }
+
+  res.status(statusCode).json({ success: false, message });
 });
 
 export default app;

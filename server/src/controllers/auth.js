@@ -33,7 +33,7 @@ const register = async (req, res, next) => {
       if (error) {
         throw new Error(error);
       }
-      return res.send("registered successfully");
+      return res.json("registered successfully");
     });
   } catch (error) {
     next(error);
