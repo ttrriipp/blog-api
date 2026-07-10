@@ -6,7 +6,7 @@ export const isAuthenticated = [
     try {
       if (!req.user) {
         res.status(401);
-        throw new Error("unauthorizeddd");
+        throw new Error("unauthorized");
       }
       next();
     } catch (error) {

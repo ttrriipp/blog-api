@@ -13,6 +13,6 @@ export const authMiddleware = async ({ context }) => {
     context.set(UserContext, user);
   } catch (error) {
     console.error(error);
-    throw data();
+    throw data(error.response.data, error.response);
   }
 };

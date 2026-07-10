@@ -9,6 +9,10 @@ function RootErrorBoundary() {
           {error.status} {error.statusText}
         </h1>
         {error.data &&
+          (
+            <p>{error.data}</p>
+          )}
+        {Array.isArray(error.data) &&
           (<ul>
             {error.data.map((item, index) => (
               <li key={index}>{item.msg}</li>
