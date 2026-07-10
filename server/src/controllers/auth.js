@@ -13,7 +13,7 @@ const login = (req, res) => {
         throw new Error(err);
       }
       console.log(token);
-      res.send("successfully login");
+      res.json({ token });
     },
   );
 };
