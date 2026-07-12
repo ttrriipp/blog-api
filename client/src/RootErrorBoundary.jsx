@@ -2,23 +2,31 @@ import { useRouteError, isRouteErrorResponse } from "react-router";
 
 function RootErrorBoundary() {
   let error = useRouteError();
+  console.log(error);
+
   if (isRouteErrorResponse(error)) {
+    if (error.status === 400) {
+      return (
+        <div className="flex flex-col">
+          <h1>Could not process your form data. Please fix the following:</h1>
+          <ul className="list-disc">
+            {Object.values(error.data).map((item, index) => (
+              <li className="text-red-600" key={index}>{item.msg}</li>
+            ))}
+          </ul>
+        </div>
+      )
+    }
     return (
       <>
         <h1>
           {error.status} {error.statusText}
         </h1>
-        {error.data &&
-          (
-            <p>{error.data}</p>
-          )}
-        {Array.isArray(error.data) &&
-          (<ul>
-            {error.data.map((item, index) => (
-              <li key={index}>{item.msg}</li>
-            ))}
-          </ul>)
-        }
+        <ul>
+          {Object.values(error.data).map((item, index) => (
+            <li key={index}>{item.msg}</li>
+          ))}
+        </ul>
       </>
     );
   } else if (error instanceof Error) {

@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { useLoaderData, Outlet, Link } from "react-router";
 import Comment from "./components/Comment";
 
-function PostPage() {
+function Post() {
   const { post } = useLoaderData();
   const readableCreatedAt = new Date(post.createdAt).toDateString();
   return (
@@ -46,4 +46,4 @@ function PostPage() {
   )
 }
 
-export default PostPage
+export default Post

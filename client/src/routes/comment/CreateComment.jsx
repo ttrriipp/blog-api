@@ -12,7 +12,7 @@ import { Card, CardContent } from "@/components/ui/card"
 import { Form, Link } from "react-router"
 import { useState } from "react"
 
-export function CreateCommentPage() {
+export function CreateComment() {
   const [comment, setComment] = useState("");
 
   return (
@@ -56,4 +56,4 @@ export function CreateCommentPage() {
   )
 }
 
-export default CreateCommentPage
+export default CreateComment

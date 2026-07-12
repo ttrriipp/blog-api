@@ -13,11 +13,11 @@ import { Label } from "@/components/ui/label"
 import { useState } from "react";
 import { Link, Form } from "react-router";
 
-function LoginPage() {
+function Login() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
-  const handleSubmit = (_) => {
+  const handleSubmit = () => {
     setUsername("")
     setPassword("")
   }
@@ -30,7 +30,7 @@ function LoginPage() {
           Log in your account!
         </CardDescription>
         <CardAction>
-          <Link to="/register">
+          <Link to="/auth/register">
             <Button variant="link">Sign Up</Button>
           </Link>
         </CardAction>
@@ -71,4 +71,4 @@ function LoginPage() {
   )
 }
 
-export default LoginPage 
+export default Login

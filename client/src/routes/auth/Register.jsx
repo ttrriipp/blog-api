@@ -13,7 +13,7 @@ import { Label } from "@/components/ui/label"
 import { useState } from "react";
 import { NavLink, Form } from "react-router";
 
-function RegisterPage() {
+function Register() {
   const [name, setName] = useState("");
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -32,7 +32,7 @@ function RegisterPage() {
           Let's set your account up!
         </CardDescription>
         <CardAction>
-          <NavLink to="/login">
+          <NavLink to="/auth/login">
             <Button variant="link">Log in</Button>
           </NavLink>
         </CardAction>
@@ -84,4 +84,4 @@ function RegisterPage() {
   )
 }
 
-export default RegisterPage
+export default Register
