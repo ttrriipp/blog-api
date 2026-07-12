@@ -4,11 +4,11 @@ import { UserContext } from "@/context";
 import { useContext } from "react";
 
 function Header() {
-  const user = useContext(UserContext);
-  console.log(user)
+  const { user, setUser } = useContext(UserContext);
 
   const handleLogout = () => {
     localStorage.removeItem("access_token")
+    setUser(null)
   }
 
   return (
@@ -17,7 +17,7 @@ function Header() {
         <a href="/" className="text-4xl font-extrabold text-sidebar-foreground">BS Blog</a>
       </div>
 
-      {user && (
+      {!user && (
         <div className="flex gap-2">
           <NavLink to={'/auth/register'}>
             <Button>Register</Button>

@@ -2,7 +2,6 @@ import { useRouteError, isRouteErrorResponse } from "react-router";
 
 function RootErrorBoundary() {
   let error = useRouteError();
-  console.log(error);
 
   if (isRouteErrorResponse(error)) {
     if (error.status === 400) {
@@ -22,11 +21,9 @@ function RootErrorBoundary() {
         <h1>
           {error.status} {error.statusText}
         </h1>
-        <ul>
-          {Object.values(error.data).map((item, index) => (
-            <li key={index}>{item.msg}</li>
-          ))}
-        </ul>
+        {error.data && (
+          <p></p>
+        )}
       </>
     );
   } else if (error instanceof Error) {

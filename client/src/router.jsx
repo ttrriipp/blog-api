@@ -56,10 +56,6 @@ const routes = [
       },
       {
         path: "posts/:postId/comments/create",
-        loader: async ({ context }) => {
-          const user = context.get(UserContext);
-          return { user };
-        },
         Component: CreateComment,
         middleware: [authMiddleware],
         action: createCommentAction,

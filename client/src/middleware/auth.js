@@ -1,8 +1,7 @@
-import { UserContext } from "@/context";
 import { redirect, data } from "react-router";
 import apiClient from "@/lib/api";
 
-export const authMiddleware = async ({ context }) => {
+export const authMiddleware = async () => {
   try {
     const token = localStorage.getItem("access_token");
     if (!token) {
@@ -13,17 +12,14 @@ export const authMiddleware = async ({ context }) => {
       });
     }
     const { data } = await apiClient.get("/auth/me");
+
     const user = data;
     if (!user) {
       console.log("you are not authenticated");
       throw redirect("/");
     }
-    context.set(UserContext, user);
   } catch (error) {
     console.error(error);
-    if (error.response) {
-      throw data(error.response.data, error.response);
-    }
     throw data(null, error);
   }
 };
