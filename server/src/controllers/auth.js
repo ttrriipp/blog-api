@@ -2,20 +2,32 @@ import "dotenv/config";
 import bcrypt from "bcryptjs";
 import { prisma } from "../lib/prisma.js";
 import jwt from "jsonwebtoken";
+import passport from "passport";
 
-const login = (req, res) => {
-  jwt.sign(
-    req.user,
-    process.env.SECRET,
-    { expiresIn: "1h" },
-    function (err, token) {
-      if (err) {
-        throw new Error(err);
-      }
-      console.log(token);
-      res.json({ token });
-    },
-  );
+const login = (req, res, next) => {
+  passport.authenticate("local", (err, user, info) => {
+    if (err) {
+      return next(err);
+    }
+
+    if (!user) {
+      return res.status(401).json({ message: info.message });
+    }
+
+    jwt.sign(
+      user,
+      process.env.SECRET,
+      { expiresIn: "1h" },
+      function (err, token) {
+        if (err) {
+          throw new Error(err);
+        }
+        console.log(token);
+        const { password, ...userDetails } = user;
+        res.json({ token, user: userDetails });
+      },
+    );
+  })(req, res, next);
 };
 
 const register = async (req, res, next) => {
@@ -29,20 +41,16 @@ const register = async (req, res, next) => {
         password: hashedPassword,
       },
     });
-    req.login(createdUser, (error) => {
-      if (error) {
-        throw new Error(error);
-      }
-    });
+    const { password, ...user } = createdUser;
     jwt.sign(
-      req.user,
+      user,
       process.env.SECRET,
       { expiresIn: "1h" },
       function (err, token) {
         if (err) {
           throw new Error(err);
         }
-        return res.json({ token });
+        return res.json({ token, user });
       },
     );
   } catch (error) {
@@ -50,17 +58,7 @@ const register = async (req, res, next) => {
   }
 };
 
-const logout = (req, res, next) => {
-  if (!req.user) return res.send("you are already logged out");
-  req.logout(function (err) {
-    if (err) return next(err);
-
-    res.send("succesfully logged out");
-  });
-};
-
 export default {
   login,
   register,
-  logout,
 };
