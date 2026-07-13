@@ -13,6 +13,10 @@ import { Label } from "@/components/ui/label"
 import { useState } from "react";
 import { Link, Form } from "react-router";
 
+export async function loader() {
+  return null
+}
+
 function Login() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");

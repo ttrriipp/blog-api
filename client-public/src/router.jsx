@@ -4,6 +4,7 @@ import Post from "./routes/post/Post";
 import { loader as homeLoader } from "./routes/home/homeLoader";
 import { loader as postLoader } from "./routes/post/postLoader";
 import { loader as rootLoader } from "./routes/Root";
+import { loader as loginLoader } from "./routes/auth/Login";
 import { action as registerAction } from "./routes/auth/registerAction";
 import { action as loginAction } from "./routes/auth/loginAction";
 import { action as createCommentAction } from "./routes/comment/createCommentAction";
@@ -11,7 +12,6 @@ import Register from "./routes/auth/Register";
 import RootErrorBoundary from "./RootErrorBoundary";
 import CreateComment from "./routes/comment/CreateComment";
 import { authMiddleware } from "./middleware/auth";
-import { UserContext } from "./context";
 import Login from "./routes/auth/Login";
 import { guestMiddleware } from "./middleware/guest";
 import { createBrowserRouter } from "react-router"
@@ -43,6 +43,7 @@ const routes = [
             path: "login",
             Component: Login,
             action: loginAction,
+            loader: loginLoader,
             middleware: [guestMiddleware],
             ErrorBoundary: RootErrorBoundary,
           },
