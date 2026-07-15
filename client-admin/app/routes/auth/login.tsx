@@ -49,11 +49,6 @@ export default function Login() {
         <CardDescription>
           Log in your account!
         </CardDescription>
-        <CardAction>
-          {/* <Link to="/auth/register"> */}
-          {/*   <Button variant="link">Sign Up</Button> */}
-          {/* </Link> */}
-        </CardAction>
       </CardHeader>
       <CardContent>
         <Form id="loginForm" method="post" onSubmit={handleSubmit}>

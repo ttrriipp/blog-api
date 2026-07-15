@@ -1,6 +1,7 @@
 import { NavLink } from "react-router"
 import type { NavBarProps } from "~/types"
 import { Button } from "~/components/ui/button"
+import LogoutAlert from "./logoutAlert"
 
 export default function NavBar({ user }: NavBarProps) {
   return (
@@ -9,22 +10,9 @@ export default function NavBar({ user }: NavBarProps) {
         <a href="/" className="text-4xl font-extrabold text-sidebar-foreground">BS Blog</a>
       </div>
 
-      {!user && (
-        <div className="flex gap-2">
-          <NavLink to={'/auth/register'}>
-            <Button>Register</Button>
-          </NavLink>
-          <NavLink to={'/auth/login'}>
-            <Button>Log in</Button>
-          </NavLink>
-        </div>
-      )
-      }
-      {user && (
-        <div className="flex gap-2">
-          <Button>Logout</Button>
-        </div>
-      )}
+      <div className="flex gap-2">
+        <LogoutAlert />
+      </div>
 
     </div >
   )

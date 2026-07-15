@@ -13,6 +13,7 @@ import "./app.css";
 import LoadingScreen from "./components/loading-screen";
 import apiClient from "./lib/api";
 import { ThemeProvider } from "./components/theme-provider";
+import NavBar from "./routes/components/navBar";
 
 export const links: Route.LinksFunction = () => [
   { rel: "preconnect", href: "https://fonts.googleapis.com" },
@@ -62,10 +63,15 @@ export function HydrateFallback() {
 }
 
 export default function App() {
-  const user = useLoaderData<typeof clientLoader>();
+  const { user } = useLoaderData<typeof clientLoader>();
   return (
     <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
-      <Outlet context={{ user }} />
+      <div className="@container min-h-screen">
+        {user && (
+          <NavBar user={user} />
+        )}
+        <Outlet context={{ user }} />
+      </div>
     </ThemeProvider>
   );
 }
