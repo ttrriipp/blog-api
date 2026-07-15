@@ -14,19 +14,13 @@ const login = (req, res, next) => {
       return res.status(401).json({ message: info.message });
     }
 
-    jwt.sign(
-      user,
-      process.env.SECRET,
-      { expiresIn: "1h" },
-      function (err, token) {
-        if (err) {
-          throw new Error(err);
-        }
-        console.log(token);
-        const { password, ...userDetails } = user;
-        res.json({ token, user: userDetails });
-      },
-    );
+    jwt.sign(user, process.env.SECRET, function (err, token) {
+      if (err) {
+        throw new Error(err);
+      }
+      const { password, ...userDetails } = user;
+      res.json({ token, user: userDetails });
+    });
   })(req, res, next);
 };
 
@@ -42,17 +36,12 @@ const register = async (req, res, next) => {
       },
     });
     const { password, ...user } = createdUser;
-    jwt.sign(
-      user,
-      process.env.SECRET,
-      { expiresIn: "1h" },
-      function (err, token) {
-        if (err) {
-          throw new Error(err);
-        }
-        return res.json({ token, user });
-      },
-    );
+    jwt.sign(user, process.env.SECRET, function (err, token) {
+      if (err) {
+        throw new Error(err);
+      }
+      return res.json({ token, user });
+    });
   } catch (error) {
     next(error);
   }
