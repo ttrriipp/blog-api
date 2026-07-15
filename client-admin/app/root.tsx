@@ -12,6 +12,7 @@ import type { Route } from "./+types/root";
 import "./app.css";
 import LoadingScreen from "./components/loading-screen";
 import apiClient from "./lib/api";
+import { ThemeProvider } from "./components/theme-provider";
 
 export const links: Route.LinksFunction = () => [
   { rel: "preconnect", href: "https://fonts.googleapis.com" },
@@ -62,7 +63,11 @@ export function HydrateFallback() {
 
 export default function App() {
   const user = useLoaderData<typeof clientLoader>();
-  return <Outlet context={{ user }} />;
+  return (
+    <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
+      <Outlet context={{ user }} />
+    </ThemeProvider>
+  );
 }
 
 export function ErrorBoundary({ error }: Route.ErrorBoundaryProps) {
