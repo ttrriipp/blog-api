@@ -18,10 +18,12 @@ import { Button } from "~/components/ui/button"
 import { MoreHorizontalIcon } from "lucide-react"
 import EditPost from "./editPost"
 import { useState } from "react"
+import { useFetcher } from "react-router";
 
 export default function PostTable({ posts }: PostTableProps) {
   const [openEdit, setOpenEdit] = useState(false);
   const [selectedPost, setSelectedPost] = useState<Post>(posts[0])
+  let fetcher = useFetcher();
   return (
     <div className="rounded-md border">
       <EditPost post={selectedPost} open={openEdit} setOpen={setOpenEdit} />
@@ -55,6 +57,18 @@ export default function PostTable({ posts }: PostTableProps) {
                   <DropdownMenuContent align="end" className="p-2">
                     <DropdownMenuItem onClick={() => { setOpenEdit(true); setSelectedPost(post) }}>
                       Edit
+                    </DropdownMenuItem>
+                    <DropdownMenuItem onClick={() => {
+                      fetcher.submit(
+                        {
+                          id: post.id,
+                          title: post.title,
+                          content: post.content,
+                          published: !post.published
+                        },
+                        { action: `/posts/${post.id}/update`, method: "post" })
+                    }}>
+                      {post.published ? "Unpublish" : "Publish"}
                     </DropdownMenuItem>
                     <DropdownMenuSeparator />
                     <DropdownMenuItem variant="destructive">

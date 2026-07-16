@@ -80,11 +80,13 @@ const show = async (req, res, next) => {
 const update = async (req, res, next) => {
   try {
     const validatedPost = res.locals.validatedPost;
+    validatedPost.published = validatedPost.published === "true" ? true : false;
     await prisma.post.update({
       where: { id: parseInt(req.params.postId) },
       data: {
         title: validatedPost.title,
         content: validatedPost.content,
+        published: validatedPost.published,
       },
     });
     res.json("updated successfully");

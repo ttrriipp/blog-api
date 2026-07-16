@@ -6,7 +6,6 @@ export async function clientAction({ request }: Route.ClientActionArgs) {
   const formData = await request.formData();
   const post = Object.fromEntries(formData)
   const { id, ...postData } = post
-  console.log(postData)
   await apiClient.patch(`admin/posts/${id}`, postData)
   return redirect('/')
 }
