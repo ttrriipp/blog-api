@@ -24,6 +24,7 @@ export default function PostTable({ posts }: PostTableProps) {
   const [selectedPost, setSelectedPost] = useState<Post>(posts[0])
   return (
     <div className="rounded-md border">
+      <EditPost post={selectedPost} open={openEdit} setOpen={setOpenEdit} />
       <Table className="mx-auto w-50 h-auto">
         <TableHeader>
           <TableRow>
