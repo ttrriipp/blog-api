@@ -7,6 +7,7 @@ export default [
     route("logout", "routes/auth/logout.tsx")
   ]),
   ...prefix("posts", [
-    route("create", "routes/posts/create.tsx")
+    route("create", "routes/posts/create.tsx"),
+    route(":postId/update", "routes/posts/update.tsx")
   ])
 ] satisfies RouteConfig;

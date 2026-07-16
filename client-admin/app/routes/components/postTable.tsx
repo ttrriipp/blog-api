@@ -16,8 +16,12 @@ import {
 } from "~/components/ui/dropdown-menu"
 import { Button } from "~/components/ui/button"
 import { MoreHorizontalIcon } from "lucide-react"
+import EditPost from "./editPost"
+import { useState } from "react"
 
 export default function PostTable({ posts }: PostTableProps) {
+  const [openEdit, setOpenEdit] = useState(false);
+  const [selectedPost, setSelectedPost] = useState<Post>(posts[0])
   return (
     <div className="rounded-md border">
       <Table className="mx-auto w-50 h-auto">
@@ -44,10 +48,13 @@ export default function PostTable({ posts }: PostTableProps) {
               <TableCell>{new Date(post.createdAt).toLocaleString()}</TableCell>
               <TableCell>{new Date(post.updatedAt).toLocaleString()}</TableCell>
               <TableCell>
+                <EditPost post={selectedPost} open={openEdit} setOpen={setOpenEdit} />
                 <DropdownMenu>
                   <DropdownMenuTrigger render={<Button variant="ghost" size="icon" className="size-8"><MoreHorizontalIcon /><span className="sr-only">Open menu</span></Button>} />
                   <DropdownMenuContent align="end" className="p-2">
-                    <DropdownMenuItem>Edit</DropdownMenuItem>
+                    <DropdownMenuItem onClick={() => { setOpenEdit(true); setSelectedPost(post) }}>
+                      Edit
+                    </DropdownMenuItem>
                     <DropdownMenuSeparator />
                     <DropdownMenuItem variant="destructive">
                       Delete

@@ -40,14 +40,14 @@ const publicIndex = async (req, res, next) => {
 const create = async (req, res, next) => {
   try {
     const validatedPost = res.locals.validatedPost;
-    const createdPost = await prisma.post.create({
+    await prisma.post.create({
       data: {
         authorId: req.user.id,
         title: validatedPost.title,
         content: validatedPost.content,
       },
     });
-    res.send("created post successfully");
+    res.json("created post successfully");
   } catch (error) {
     next(error);
   }
@@ -87,7 +87,7 @@ const update = async (req, res, next) => {
         content: validatedPost.content,
       },
     });
-    res.send("updated successfully");
+    res.json("updated successfully");
   } catch (error) {
     next(error);
   }
