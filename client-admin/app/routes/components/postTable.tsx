@@ -71,7 +71,11 @@ export default function PostTable({ posts }: PostTableProps) {
                       {post.published ? "Unpublish" : "Publish"}
                     </DropdownMenuItem>
                     <DropdownMenuSeparator />
-                    <DropdownMenuItem variant="destructive">
+                    <DropdownMenuItem variant="destructive" onClick={() => {
+                      fetcher.submit(
+                        {},
+                        { action: `/posts/${post.id}/delete`, method: "post" })
+                    }}>
                       Delete
                     </DropdownMenuItem>
                   </DropdownMenuContent>

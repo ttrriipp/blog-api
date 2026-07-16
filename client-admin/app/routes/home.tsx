@@ -15,7 +15,6 @@ export async function clientLoader() {
 
 export default function Home() {
   const posts = useLoaderData();
-  console.log(posts)
   return (
     <main className="flex min-h-[90cqh] bg-background justify-center items-center">
       <div className="flex flex-col gap-2">

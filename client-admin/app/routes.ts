@@ -8,6 +8,7 @@ export default [
   ]),
   ...prefix("posts", [
     route("create", "routes/posts/create.tsx"),
-    route(":postId/update", "routes/posts/update.tsx")
+    route(":postId/update", "routes/posts/update.tsx"),
+    route(":postId/delete", "routes/posts/delete.tsx")
   ])
 ] satisfies RouteConfig;
