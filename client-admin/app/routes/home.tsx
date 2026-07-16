@@ -1,7 +1,7 @@
 import { redirect, useLoaderData, useOutletContext } from "react-router";
 import apiClient from "~/lib/api";
-import { type User } from "~/types";
 import PostTable from "./components/postTable";
+import CreatePost from "./components/createPost";
 
 export async function clientLoader() {
   const token = localStorage.getItem("access_token")
@@ -18,7 +18,12 @@ export default function Home() {
   console.log(posts)
   return (
     <main className="flex min-h-[90cqh] bg-background justify-center items-center">
-      <PostTable posts={posts} />
+      <div className="flex flex-col gap-2">
+        <div className="self-end">
+          <CreatePost />
+        </div>
+        <PostTable posts={posts} />
+      </div>
     </main>
   )
 }

@@ -46,7 +46,7 @@ export default function PostTable({ posts }: PostTableProps) {
               <TableCell>
                 <DropdownMenu>
                   <DropdownMenuTrigger render={<Button variant="ghost" size="icon" className="size-8"><MoreHorizontalIcon /><span className="sr-only">Open menu</span></Button>} />
-                  <DropdownMenuContent align="end">
+                  <DropdownMenuContent align="end" className="p-2">
                     <DropdownMenuItem>Edit</DropdownMenuItem>
                     <DropdownMenuSeparator />
                     <DropdownMenuItem variant="destructive">
