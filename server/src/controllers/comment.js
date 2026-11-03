@@ -2,11 +2,13 @@ import { prisma } from "../lib/prisma.js";
 
 const index = async (req, res, next) => {
   try {
-    const postId = parseInt(req.params.postId);
+    const postId = Number(req.params.postId);
+    if (!Number.isSafeInteger(postId) || postId <= 0) {
+      return res.sendStatus(400);
+    }
     const comments = await prisma.comment.findMany({
       where: { postId },
     });
-    if (comments.length === 0) throw new Error("no comments from this post");
     res.json(comments);
   } catch (error) {
     next(error);
@@ -15,7 +17,11 @@ const index = async (req, res, next) => {
 
 const create = async (req, res, next) => {
   try {
-    const postId = parseInt(req.params.postId);
+    const postId = Number(req.params.postId);
+    if (!Number.isSafeInteger(postId) || postId <= 0) {
+      return res.sendStatus(400);
+    }
+
     const commenterId = req.user.id;
     const validatedComment = res.locals.validatedComment;
     const createdComment = await prisma.comment.create({
@@ -25,8 +31,7 @@ const create = async (req, res, next) => {
         ...validatedComment,
       },
     });
-    console.log(createdComment);
-    res.json("created successfully");
+    res.json(createdComment);
   } catch (error) {
     next(error);
   }
@@ -34,15 +39,19 @@ const create = async (req, res, next) => {
 
 const update = async (req, res, next) => {
   try {
+    const commentId = Number(req.params.commentId);
+    if (!Number.isSafeInteger(postId) || postId <= 0) {
+      return res.sendStatus(400);
+    }
+
     const validatedComment = res.locals.validatedComment;
     const updatedComment = await prisma.comment.update({
-      where: { id: parseInt(req.params.commentId) },
+      where: { id: commentId },
       data: {
         ...validatedComment,
       },
     });
-    console.log(updatedComment);
-    res.send("updated successfully");
+    res.send(updatedComment);
   } catch (error) {
     next(error);
   }
@@ -50,15 +59,16 @@ const update = async (req, res, next) => {
 
 const deleteComment = async (req, res, next) => {
   try {
+    const commentId = Number(req.params.commentId);
+    if (!Number.isSafeInteger(postId) || postId <= 0) {
+      return res.sendStatus(400);
+    }
+
     const comment = await prisma.comment.findUnique({
-      where: { id: parseInt(req.params.commentId) },
+      where: { id: commentId },
     });
     if (!comment) res.sendStatus(404);
-    const deletedComment = await prisma.comment.delete({
-      where: { id: parseInt(req.params.commentId) },
-    });
-    console.log(deletedComment);
-    res.send("successfully deleted");
+    res.sendStatus(204);
   } catch (error) {
     next(error);
   }

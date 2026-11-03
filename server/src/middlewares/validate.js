@@ -44,7 +44,7 @@ const register = [
 ];
 
 const post = [
-  body("title").trim().notEmpty().withMessage("name is required"),
+  body("title").trim().notEmpty().withMessage("title is required"),
   body("content").trim().escape(),
   body("published").trim().escape(),
   async (req, res, next) => {
