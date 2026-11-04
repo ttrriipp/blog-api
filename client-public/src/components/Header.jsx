@@ -14,7 +14,7 @@ function Header() {
   return (
     <div className="flex justify-between p-4 bg-sidebar min-h-[5cqh]">
       <div>
-        <a href="/" className="text-4xl font-extrabold text-sidebar-foreground">BS Blog</a>
+        <a href="/" className="text-4xl font-extrabold text-sidebar-foreground">Trip's Blog</a>
       </div>
 
       {!user && (
