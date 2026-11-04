@@ -11,18 +11,29 @@ import {
 import { Input } from "~/components/ui/input"
 import { Label } from "~/components/ui/label"
 import { useState } from "react";
-import { Form, redirect } from "react-router";
+import { data, isRouteErrorResponse, redirect, useFetcher } from "react-router";
 import type { Route } from "./+types/login";
 import apiClient from "~/lib/api";
 
 export async function clientAction({
   request,
 }: Route.ClientActionArgs) {
-  const formData = await request.formData();
-  const user = Object.fromEntries(formData);
-  const { data: login } = await apiClient.post("/auth/login", user);
-  localStorage.setItem("access_token", login.token)
-  return redirect("/");
+  try {
+    const formData = await request.formData();
+    const user = Object.fromEntries(formData);
+    const { data: login } = await apiClient.post("/auth/login", user);
+    localStorage.setItem("access_token", login.token)
+    return redirect("/");
+  } catch (error: any) {
+    if (error.response) {
+      return data(
+        {
+          errors: error.response.data,
+        },
+        { status: error.response.status },
+      );
+    }
+  }
 }
 
 export async function clientLoader() {
@@ -36,6 +47,9 @@ export async function clientLoader() {
 export default function Login() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+
+  const fetcher = useFetcher();
+  const errors = fetcher.data?.errors;
 
   const handleSubmit = () => {
     setUsername("")
@@ -51,8 +65,23 @@ export default function Login() {
         </CardDescription>
       </CardHeader>
       <CardContent>
-        <Form id="loginForm" method="post" onSubmit={handleSubmit}>
+        <fetcher.Form id="loginForm" method="post" onSubmit={handleSubmit}>
           <div className="flex flex-col gap-6">
+
+
+            {errors && (
+              <div
+                role="alert"
+                className="rounded-md border border-destructive/30 bg-destructive/10 p-3 text-sm text-destructive"
+              >
+                <ul>
+                  {errors.map((error: any, i: number) => (
+                    <li key={i}>{error.msg}</li>
+                  ))}
+                </ul>
+              </div>
+            )}
+
             <div className="grid gap-2">
               <Label htmlFor="username">Username</Label>
               <Input
@@ -75,11 +104,13 @@ export default function Login() {
                 required />
             </div>
           </div>
-        </Form>
+        </fetcher.Form>
       </CardContent>
       <CardFooter className="flex-col gap-2">
         <Button type="submit" form="loginForm" className="w-full">
-          Login
+          {fetcher.state !== "idle"
+            ? "Logging in..."
+            : "Login"}
         </Button>
       </CardFooter>
     </Card>
