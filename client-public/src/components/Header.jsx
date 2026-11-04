@@ -4,12 +4,7 @@ import { UserContext } from "@/context";
 import { useContext } from "react";
 
 function Header() {
-  const { user, setUser } = useContext(UserContext);
-
-  const handleLogout = () => {
-    localStorage.removeItem("access_token")
-    setUser(null)
-  }
+  const { user, logout } = useContext(UserContext);
 
   return (
     <div className="flex justify-between p-4 bg-sidebar min-h-[5cqh]">
@@ -30,7 +25,7 @@ function Header() {
       }
       {user && (
         <div className="flex gap-2">
-          <Button onClick={handleLogout}>Logout</Button>
+          <Button onClick={logout}>Logout</Button>
         </div>
       )
       }

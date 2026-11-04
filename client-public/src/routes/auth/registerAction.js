@@ -1,4 +1,3 @@
-import { UserContext } from "@/context";
 import apiClient from "@/lib/api";
 import { data, redirect } from "react-router";
 
@@ -11,8 +10,6 @@ export async function action({ context, request }) {
     console.log(data);
 
     localStorage.setItem("access_token", data.token);
-
-    context.set(UserContext, user);
 
     console.log("you are now authenticated!");
 
