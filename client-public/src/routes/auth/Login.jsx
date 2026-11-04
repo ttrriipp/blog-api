@@ -23,7 +23,7 @@ function Login() {
 
   let fetcher = useFetcher();
   let busy = fetcher.state !== "idle";
-  let error = fetcher.data?.error;
+  let errors = fetcher.data?.errors;
 
   const handleSubmit = () => {
     setUsername("")
@@ -47,12 +47,16 @@ function Login() {
         <fetcher.Form id="loginForm" method="post" onSubmit={handleSubmit}>
           <div className="flex flex-col gap-6">
 
-            {error && (
+            {errors && (
               <div
                 role="alert"
                 className="rounded-md border border-destructive/30 bg-destructive/10 p-3 text-sm text-destructive"
               >
-                {error}
+                <ul>
+                  {errors.map((error, i) => (
+                    <li key={i}>{error.msg}</li>
+                  ))}
+                </ul>
               </div>
             )}
 

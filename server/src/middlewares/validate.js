@@ -37,6 +37,9 @@ const register = [
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
       res.status(400).json(errors.array());
+      console.log("wew");
+      console.log(errors.array());
+      console.log("wew");
     }
     res.locals.validatedUser = matchedData(req);
     next();

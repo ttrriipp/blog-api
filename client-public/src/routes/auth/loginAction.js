@@ -4,13 +4,11 @@ import { data, redirect } from "react-router";
 export async function action({ request }) {
   try {
     const formData = await request.formData();
-    const userData = Object.fromEntries(formData);
+    const user = Object.fromEntries(formData);
 
-    const { data: login } = await apiClient.post("/auth/login", userData);
+    const { data: login } = await apiClient.post("/auth/login", user);
 
     localStorage.setItem("access_token", login.token);
-
-    console.log("you are now authenticated!");
 
     return redirect("/");
   } catch (error) {
@@ -19,7 +17,7 @@ export async function action({ request }) {
     if (error.response) {
       return data(
         {
-          error: error.response.data.message,
+          errors: error.response.data,
         },
         { status: error.response.status },
       );

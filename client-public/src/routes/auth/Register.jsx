@@ -11,12 +11,16 @@ import {
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { useState } from "react";
-import { NavLink, Form } from "react-router";
+import { NavLink, useFetcher } from "react-router";
 
 function Register() {
   const [name, setName] = useState("");
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+
+  let fetcher = useFetcher();
+  let busy = fetcher.state !== "idle";
+  let errors = fetcher.data?.errors;
 
   const handleSubmit = (e) => {
     setName("")
@@ -38,8 +42,22 @@ function Register() {
         </CardAction>
       </CardHeader>
       <CardContent>
-        <Form id="registerForm" method="post" onSubmit={handleSubmit}>
+        <fetcher.Form id="registerForm" method="post" onSubmit={handleSubmit}>
           <div className="flex flex-col gap-6">
+
+            {errors && (
+              <div
+                role="alert"
+                className="rounded-md border border-destructive/30 bg-destructive/10 p-3 text-sm text-destructive"
+              >
+                <ul>
+                  {errors.map((error, i) => (
+                    <li key={i}>{error.msg}</li>
+                  ))}
+                </ul>
+              </div>
+            )}
+
             <div className="grid gap-2">
               <Label htmlFor="name">Name</Label>
               <Input
@@ -73,11 +91,11 @@ function Register() {
                 required />
             </div>
           </div>
-        </Form>
+        </fetcher.Form>
       </CardContent>
       <CardFooter className="flex-col gap-2">
         <Button type="submit" form="registerForm" className="w-full">
-          Register
+          {busy ? "Registering..." : "Register"}
         </Button>
       </CardFooter>
     </Card>

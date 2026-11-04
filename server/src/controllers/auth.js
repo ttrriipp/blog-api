@@ -11,7 +11,7 @@ const login = (req, res, next) => {
     }
 
     if (!user) {
-      return res.status(401).json({ message: info.message });
+      return res.status(401).json([{ msg: info.message }]);
     }
 
     jwt.sign(user, process.env.SECRET, function (err, token) {
