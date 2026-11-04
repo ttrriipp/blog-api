@@ -11,7 +11,7 @@ import {
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { useState } from "react";
-import { Link, Form } from "react-router";
+import { Link, useFetcher } from "react-router";
 
 export async function loader() {
   return null
@@ -21,12 +21,14 @@ function Login() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
+  let fetcher = useFetcher();
+  let busy = fetcher.state !== "idle";
+  let error = fetcher.data?.error;
+
   const handleSubmit = () => {
     setUsername("")
     setPassword("")
   }
-
-
 
   return (
     <Card className="w-full max-w-sm">
@@ -37,13 +39,23 @@ function Login() {
         </CardDescription>
         <CardAction>
           <Link to="/auth/register">
-            <Button variant="link">Sign Up</Button>
+            <Button variant="link">Create Account</Button>
           </Link>
         </CardAction>
       </CardHeader>
       <CardContent>
-        <Form id="loginForm" method="post" onSubmit={handleSubmit}>
+        <fetcher.Form id="loginForm" method="post" onSubmit={handleSubmit}>
           <div className="flex flex-col gap-6">
+
+            {error && (
+              <div
+                role="alert"
+                className="rounded-md border border-destructive/30 bg-destructive/10 p-3 text-sm text-destructive"
+              >
+                {error}
+              </div>
+            )}
+
             <div className="grid gap-2">
               <Label htmlFor="username">Username</Label>
               <Input
@@ -66,11 +78,11 @@ function Login() {
                 required />
             </div>
           </div>
-        </Form>
+        </fetcher.Form>
       </CardContent>
       <CardFooter className="flex-col gap-2">
         <Button type="submit" form="loginForm" className="w-full">
-          Login
+          {busy ? "Logging in..." : "Login"}
         </Button>
       </CardFooter>
     </Card>

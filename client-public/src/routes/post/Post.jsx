@@ -27,6 +27,7 @@ function Post() {
           <CardHeader>
             <CardTitle>
               Comments
+              <span className="text-gray-500"> {post.comments.length}</span>
             </CardTitle>
             <CardAction>
               <Link to="comments/create">
