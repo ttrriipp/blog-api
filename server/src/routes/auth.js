@@ -5,6 +5,7 @@ const router = Router();
 import { isAuthenticated, isGuest } from "../middlewares/auth.js";
 
 router.post("/login", validate.login, isGuest, controller.login);
+router.post("/admin/login", validate.login, isGuest, controller.adminLogin);
 
 router.post("/register", isGuest, validate.register, controller.register);
 router.get("/me", isAuthenticated, (req, res) => {

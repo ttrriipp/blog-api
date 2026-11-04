@@ -7,7 +7,7 @@ export default function NavBar({ user }: NavBarProps) {
   return (
     <div className="flex justify-between p-4 bg-sidebar min-h-[5cqh]">
       <div>
-        <a href="/" className="text-4xl font-extrabold text-sidebar-foreground">Trip's Blog</a>
+        <a href="/" className="text-4xl font-extrabold text-sidebar-foreground">Trip's Blog Management</a>
       </div>
 
       <div className="flex gap-2">

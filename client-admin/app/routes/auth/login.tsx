@@ -21,7 +21,7 @@ export async function clientAction({
   try {
     const formData = await request.formData();
     const user = Object.fromEntries(formData);
-    const { data: login } = await apiClient.post("/auth/login", user);
+    const { data: login } = await apiClient.post("/auth/admin/login", user);
     localStorage.setItem("access_token", login.token)
     return redirect("/");
   } catch (error: any) {

@@ -47,7 +47,34 @@ const register = async (req, res, next) => {
   }
 };
 
+const adminLogin = (req, res, next) => {
+  passport.authenticate("local", async (err, user, info) => {
+    if (err) {
+      return next(err);
+    }
+
+    if (!user) {
+      return res.status(401).json([{ msg: info.message }]);
+    }
+
+    if (user.role !== "ADMIN") {
+      return res
+        .status(403)
+        .json([{ msg: "Only admin accounts are allowed." }]);
+    }
+
+    jwt.sign(user, process.env.SECRET, function (err, token) {
+      if (err) {
+        throw new Error(err);
+      }
+      const { password, ...userDetails } = user;
+      res.json({ token, user: userDetails });
+    });
+  })(req, res, next);
+};
+
 export default {
   login,
   register,
+  adminLogin,
 };
