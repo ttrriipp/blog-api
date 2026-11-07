@@ -21,7 +21,7 @@ export default function Home() {
         <div className="self-end">
           <CreatePost />
         </div>
-        <PostTable posts={posts} />
+        {(Array.isArray(posts) && posts.length !== 0) && <PostTable posts={posts} />}
       </div>
     </main>
   )

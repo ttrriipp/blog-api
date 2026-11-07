@@ -3,10 +3,14 @@ import { Separator } from "@/components/ui/separator";
 import { Button } from "@/components/ui/button";
 import { useLoaderData, Outlet, Link } from "react-router";
 import Comment from "./components/Comment";
+import { UserContext } from "@/context";
+import { useContext } from "react";
 
 function Post() {
   const { post } = useLoaderData();
+  const { user } = useContext(UserContext);
   const readableCreatedAt = new Date(post.createdAt).toDateString();
+
   return (
     <div className="flex justify-center p-8 flex-col gap-8">
       <section>
@@ -29,11 +33,15 @@ function Post() {
               Comments
               <span className="text-gray-500"> {post.comments.length}</span>
             </CardTitle>
-            <CardAction>
-              <Link to="comments/create">
-                <Button>Create Comment</Button>
-              </Link>
-            </CardAction>
+
+            {user && (
+              <CardAction>
+                <Link to="comments/create">
+                  <Button>Add Comment</Button>
+                </Link>
+              </CardAction>
+            )}
+
           </CardHeader>
           <CardContent className="flex flex-col gap-4">
             {post.comments.map((comment) => (

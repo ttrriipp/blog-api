@@ -41,7 +41,8 @@ export default function PostTable({ posts }: PostTableProps) {
           </TableRow>
         </TableHeader>
         <TableBody>
-          {posts.map((post: Post) => (
+
+          {(Array.isArray(posts) && posts.length !== 0) && posts.map((post: Post) => (
             <TableRow key={post.id}>
               <TableCell className="font-medium">{post.id}</TableCell>
               <TableCell>{post.title}</TableCell>

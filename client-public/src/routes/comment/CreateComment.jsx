@@ -21,7 +21,7 @@ export function CreateComment() {
         <Form method="post">
           <FieldGroup>
             <FieldSet>
-              <FieldLegend>Create Comment</FieldLegend>
+              <FieldLegend>Add comment</FieldLegend>
               <FieldDescription>
                 What do you say about the post?
               </FieldDescription>
