@@ -49,8 +49,8 @@ export default function PostTable({ posts }: PostTableProps) {
               <TableCell className="max-w-50 truncate">{post.content === "" ? "-" : post.content}</TableCell>
               <TableCell>{post.author.name}</TableCell>
               <TableCell>{post.published ? "Published" : "Draft"}</TableCell>
-              <TableCell>{new Date(post.createdAt).toLocaleString()}</TableCell>
-              <TableCell>{new Date(post.updatedAt).toLocaleString()}</TableCell>
+              <TableCell>{new Date(post.createdAt).toLocaleDateString()}</TableCell>
+              <TableCell>{new Date(post.updatedAt).toLocaleDateString()}</TableCell>
               <TableCell>
                 <EditPost post={selectedPost} open={openEdit} setOpen={setOpenEdit} />
                 <DropdownMenu>

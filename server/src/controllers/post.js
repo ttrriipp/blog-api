@@ -11,6 +11,9 @@ const adminIndex = async (req, res, next) => {
           },
         },
       },
+      orderBy: {
+        createdAt: "desc", 
+      }
     });
     return res.json(posts);
   } catch (error) {
