@@ -10,7 +10,7 @@ import {
 import { NavLink } from "react-router";
 
 function Post({ data }) {
-  const readableDate = new Date(data.createdAt).toLocaleString();
+  const readableDate = new Date(data.createdAt).toDateString();
   return (
     <Card className="relative mx-auto w-full max-w-sm pt-0">
       <div className="absolute inset-0 z-30 aspect-video bg-black/35" />
@@ -21,7 +21,7 @@ function Post({ data }) {
       />
       <CardHeader>
         <CardTitle>{data.title}</CardTitle>
-        <CardDescription>by {data.author.name} - {readableDate}</CardDescription>
+        <CardDescription>{readableDate}</CardDescription>
       </CardHeader>
       <CardContent>
         <p className="truncate">{data.content}</p>
