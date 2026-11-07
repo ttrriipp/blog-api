@@ -1,7 +1,7 @@
 import { NavLink } from "react-router"
 import type { NavBarProps } from "~/types"
 import { Button } from "~/components/ui/button"
-import LogoutAlert from "./logoutAlert"
+import LogoutButton from "./logoutButton"
 
 export default function NavBar({ user }: NavBarProps) {
   return (
@@ -11,7 +11,7 @@ export default function NavBar({ user }: NavBarProps) {
       </div>
 
       <div className="flex gap-2">
-        <LogoutAlert />
+        <LogoutButton />
       </div>
 
     </div >

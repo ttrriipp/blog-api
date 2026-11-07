@@ -16,17 +16,21 @@ import {
 } from "~/components/ui/dropdown-menu"
 import { Button } from "~/components/ui/button"
 import { MoreHorizontalIcon } from "lucide-react"
-import EditPost from "./editPost"
+import EditPostForm from "./editPostForm"
 import { useState } from "react"
 import { useFetcher } from "react-router";
+import DeletePostConfirmation from "./deletePostConfirmation"
 
 export default function PostTable({ posts }: PostTableProps) {
   const [openEdit, setOpenEdit] = useState(false);
   const [selectedPost, setSelectedPost] = useState<Post>(posts[0])
+  const [openDeleteConfirmation, setOpenDeleteConfirmation] = useState(false);
   let fetcher = useFetcher();
   return (
     <div className="rounded-md border">
-      <EditPost post={selectedPost} open={openEdit} setOpen={setOpenEdit} />
+      <EditPostForm post={selectedPost} open={openEdit} setOpen={setOpenEdit} />
+      <DeletePostConfirmation post={selectedPost} open={openDeleteConfirmation} setOpen={setOpenDeleteConfirmation} />
+
       <Table className="mx-auto w-50 h-auto">
         <TableHeader>
           <TableRow>
@@ -52,7 +56,6 @@ export default function PostTable({ posts }: PostTableProps) {
               <TableCell>{new Date(post.createdAt).toLocaleDateString()}</TableCell>
               <TableCell>{new Date(post.updatedAt).toLocaleDateString()}</TableCell>
               <TableCell>
-                <EditPost post={selectedPost} open={openEdit} setOpen={setOpenEdit} />
                 <DropdownMenu>
                   <DropdownMenuTrigger render={<Button variant="ghost" size="icon" className="size-8"><MoreHorizontalIcon /><span className="sr-only">Open menu</span></Button>} />
                   <DropdownMenuContent align="end" className="p-2">
@@ -72,11 +75,7 @@ export default function PostTable({ posts }: PostTableProps) {
                       {post.published ? "Unpublish" : "Publish"}
                     </DropdownMenuItem>
                     <DropdownMenuSeparator />
-                    <DropdownMenuItem variant="destructive" onClick={() => {
-                      fetcher.submit(
-                        {},
-                        { action: `/posts/${post.id}/delete`, method: "post" })
-                    }}>
+                    <DropdownMenuItem variant="destructive" onClick={() => { setOpenDeleteConfirmation(true); setSelectedPost(post) }}>
                       Delete
                     </DropdownMenuItem>
                   </DropdownMenuContent>
@@ -86,7 +85,7 @@ export default function PostTable({ posts }: PostTableProps) {
           ))}
         </TableBody>
       </Table>
-    </div>
+    </div >
 
   )
 }

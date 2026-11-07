@@ -12,7 +12,7 @@ import {
 import { Button } from "~/components/ui/button"
 import { Form } from "react-router"
 
-export default function LogoutAlert() {
+export default function LogoutButton() {
   return (
     <AlertDialog>
       <AlertDialogTrigger render={<Button>Logout</Button>} />
@@ -24,7 +24,7 @@ export default function LogoutAlert() {
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
-          <AlertDialogCancel type="submit">Cancel</AlertDialogCancel>
+          <AlertDialogCancel>Cancel</AlertDialogCancel>
           <Form action="/logout" method="post">
             <AlertDialogAction type="submit">Logout</AlertDialogAction>
           </Form>

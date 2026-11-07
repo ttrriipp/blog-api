@@ -14,7 +14,7 @@ import { Textarea } from "~/components/ui/textarea"
 import { useFetcher } from "react-router"
 import type { Post } from "~/types"
 
-export default function EditPost({ post, open, setOpen }: { post: Post | null, open: boolean, setOpen: any }) {
+export default function EditPostForm({ post, open, setOpen }: { post: Post, open: boolean, setOpen: any }) {
   let fetcher = useFetcher();
   return (
     <Dialog key={post.id} open={open} onOpenChange={setOpen}>
