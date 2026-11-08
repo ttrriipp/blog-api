@@ -14,10 +14,10 @@ function Header() {
 
       {!user && (
         <div className="flex gap-2">
-          <NavLink to={'/auth/register'}>
+          <NavLink to={'/register'}>
             <Button>Register</Button>
           </NavLink>
-          <NavLink to={'/auth/login'}>
+          <NavLink to={'/login'}>
             <Button>Log in</Button>
           </NavLink>
         </div>

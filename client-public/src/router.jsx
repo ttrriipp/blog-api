@@ -29,7 +29,7 @@ const routes = [
         loader: homeLoader,
       },
       {
-        path: "auth",
+        path: "/",
         Component: AuthLayout,
         children: [
           {

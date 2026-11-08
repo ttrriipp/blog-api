@@ -36,7 +36,7 @@ function Register() {
           Let's set your account up!
         </CardDescription>
         <CardAction>
-          <NavLink to="/auth/login">
+          <NavLink to="/login">
             <Button variant="link">Log in</Button>
           </NavLink>
         </CardAction>

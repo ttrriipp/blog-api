@@ -38,7 +38,7 @@ function Login() {
           Log in your account!
         </CardDescription>
         <CardAction>
-          <Link to="/auth/register">
+          <Link to="/register">
             <Button variant="link">Create Account</Button>
           </Link>
         </CardAction>
