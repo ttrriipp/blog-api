@@ -20,6 +20,7 @@ import EditPostForm from "./editPostForm"
 import { useState } from "react"
 import { useFetcher } from "react-router";
 import DeletePostConfirmation from "./deletePostConfirmation"
+import PostTableRow from "./postTableRow"
 
 export default function PostTable({ posts }: PostTableProps) {
   const [openEdit, setOpenEdit] = useState(false);
@@ -28,8 +29,6 @@ export default function PostTable({ posts }: PostTableProps) {
   let fetcher = useFetcher();
   return (
     <div className="rounded-md border">
-      <EditPostForm post={selectedPost} open={openEdit} setOpen={setOpenEdit} />
-      <DeletePostConfirmation post={selectedPost} open={openDeleteConfirmation} setOpen={setOpenDeleteConfirmation} />
 
       <Table className="mx-auto w-50 h-auto">
         <TableHeader>
@@ -47,41 +46,7 @@ export default function PostTable({ posts }: PostTableProps) {
         <TableBody>
 
           {(Array.isArray(posts) && posts.length !== 0) && posts.map((post: Post) => (
-            <TableRow key={post.id}>
-              <TableCell className="font-medium">{post.id}</TableCell>
-              <TableCell>{post.title}</TableCell>
-              <TableCell className="max-w-50 truncate">{post.content === "" ? "-" : post.content}</TableCell>
-              <TableCell>{post.author.name}</TableCell>
-              <TableCell>{post.published ? "Published" : "Draft"}</TableCell>
-              <TableCell>{new Date(post.createdAt).toLocaleDateString()}</TableCell>
-              <TableCell>{new Date(post.updatedAt).toLocaleDateString()}</TableCell>
-              <TableCell>
-                <DropdownMenu>
-                  <DropdownMenuTrigger render={<Button variant="ghost" size="icon" className="size-8"><MoreHorizontalIcon /><span className="sr-only">Open menu</span></Button>} />
-                  <DropdownMenuContent align="end" className="p-2">
-                    <DropdownMenuItem onClick={() => { setOpenEdit(true); setSelectedPost(post) }}>
-                      Edit
-                    </DropdownMenuItem>
-                    <DropdownMenuItem onClick={() => {
-                      fetcher.submit(
-                        {
-                          id: post.id,
-                          title: post.title,
-                          content: post.content,
-                          published: !post.published
-                        },
-                        { action: `/posts/${post.id}/update`, method: "post" })
-                    }}>
-                      {post.published ? "Unpublish" : "Publish"}
-                    </DropdownMenuItem>
-                    <DropdownMenuSeparator />
-                    <DropdownMenuItem variant="destructive" onClick={() => { setOpenDeleteConfirmation(true); setSelectedPost(post) }}>
-                      Delete
-                    </DropdownMenuItem>
-                  </DropdownMenuContent>
-                </DropdownMenu>
-              </TableCell>
-            </TableRow>
+            <PostTableRow post={post} />
           ))}
         </TableBody>
       </Table>
