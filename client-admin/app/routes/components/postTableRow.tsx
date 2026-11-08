@@ -13,13 +13,11 @@ import {
 import { Button } from "~/components/ui/button"
 import { Badge } from "~/components/ui/badge"
 import { MoreHorizontalIcon } from "lucide-react"
-import EditPostForm from "./editPostForm"
 import { useState } from "react"
 import { useFetcher, useHref, useLinkClickHandler } from "react-router";
 import DeletePostConfirmation from "./deletePostConfirmation"
 
 export default function PostTableRow({ post }: { post: Post }) {
-  const [openEdit, setOpenEdit] = useState(false);
   const [openDeleteConfirmation, setOpenDeleteConfirmation] = useState(false);
   let fetcher = useFetcher();
 
@@ -29,10 +27,8 @@ export default function PostTableRow({ post }: { post: Post }) {
 
   return (
     <>
-      <EditPostForm post={post} open={openEdit} setOpen={setOpenEdit} />
       <DeletePostConfirmation post={post} open={openDeleteConfirmation} setOpen={setOpenDeleteConfirmation} />
       <TableRow key={post.id} className="hover:cursor-pointer" onClick={(e: any) => {
-        console.log('wew')
         handleRowClick(e)
       }}>
         <TableCell className="font-medium">{post.id}</TableCell>
@@ -60,7 +56,9 @@ export default function PostTableRow({ post }: { post: Post }) {
               }}><MoreHorizontalIcon /><span className="sr-only">Open menu</span></Button>
             } />
             <DropdownMenuContent align="end" className="p-2" onClick={(e) => e.stopPropagation()}>
-              <DropdownMenuItem onClick={() => { setOpenEdit(true); }}>
+              <DropdownMenuItem onClick={(e: any) => {
+                handleRowClick(e)
+              }}>
                 Edit
               </DropdownMenuItem>
               <DropdownMenuItem onClick={() => {
@@ -71,7 +69,7 @@ export default function PostTableRow({ post }: { post: Post }) {
                     content: post.content,
                     published: !post.published
                   },
-                  { action: `/posts/${post.id}/update`, method: "post" })
+                  { action: `/posts/${post.id}/edit`, method: "post" })
               }}>
                 {post.published ? "Unpublish" : "Publish"}
               </DropdownMenuItem>

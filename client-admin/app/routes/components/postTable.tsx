@@ -1,32 +1,14 @@
 import {
   Table,
   TableBody,
-  TableCell,
   TableHead,
   TableHeader,
   TableRow,
 } from "~/components/ui/table"
 import type { PostTableProps, Post } from "~/types"
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "~/components/ui/dropdown-menu"
-import { Button } from "~/components/ui/button"
-import { MoreHorizontalIcon } from "lucide-react"
-import EditPostForm from "./editPostForm"
-import { useState } from "react"
-import { useFetcher } from "react-router";
-import DeletePostConfirmation from "./deletePostConfirmation"
 import PostTableRow from "./postTableRow"
 
 export default function PostTable({ posts }: PostTableProps) {
-  const [openEdit, setOpenEdit] = useState(false);
-  const [selectedPost, setSelectedPost] = useState<Post>(posts[0])
-  const [openDeleteConfirmation, setOpenDeleteConfirmation] = useState(false);
-  let fetcher = useFetcher();
   return (
     <div className="rounded-md border">
 
@@ -45,8 +27,8 @@ export default function PostTable({ posts }: PostTableProps) {
         </TableHeader>
         <TableBody>
 
-          {(Array.isArray(posts) && posts.length !== 0) && posts.map((post: Post) => (
-            <PostTableRow post={post} />
+          {(Array.isArray(posts) && posts.length !== 0) && posts.map((post: Post, i: number) => (
+            <PostTableRow post={post} key={i} />
           ))}
         </TableBody>
       </Table>

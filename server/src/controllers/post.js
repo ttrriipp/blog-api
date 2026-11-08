@@ -12,8 +12,8 @@ const adminIndex = async (req, res, next) => {
         },
       },
       orderBy: {
-        createdAt: "desc", 
-      }
+        createdAt: "desc",
+      },
     });
     return res.json(posts);
   } catch (error) {
@@ -85,6 +85,35 @@ const show = async (req, res, next) => {
   }
 };
 
+const adminShow = async (req, res, next) => {
+  try {
+    const postId = Number(req.params.postId);
+    if (!Number.isSafeInteger(postId) || postId <= 0) {
+      return res.sendStatus(400);
+    }
+    const post = await prisma.post.findUnique({
+      where: { id: postId },
+      omit: { published: true, authorId: true },
+      include: {
+        author: {
+          select: {
+            name: true,
+          },
+        },
+        comments: {
+          omit: { commenterId: true, postId: true },
+          include: { commenter: { select: { name: true } } },
+        },
+      },
+    });
+
+    if (!post) return res.sendStatus(404);
+    return res.json(post);
+  } catch (error) {
+    next(error);
+  }
+};
+
 const update = async (req, res, next) => {
   try {
     const validatedPost = res.locals.validatedPost;
@@ -130,10 +159,11 @@ const deletePost = async (req, res, next) => {
 };
 
 export default {
-  adminIndex,
   publicIndex,
+  adminIndex,
   create,
   show,
+  adminShow,
   update,
   deletePost,
 };

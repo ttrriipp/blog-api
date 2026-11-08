@@ -7,6 +7,12 @@ import { isAuthenticated } from "../middlewares/auth.js";
 const router = Router();
 
 router.get("/posts", isAuthenticated, isAdmin, postController.adminIndex);
+router.get(
+  "/posts/:postId",
+  isAuthenticated,
+  isAdmin,
+  postController.adminShow,
+);
 router.post(
   "/posts/create",
   isAuthenticated,
